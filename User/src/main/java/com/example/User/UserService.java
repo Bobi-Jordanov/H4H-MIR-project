@@ -37,5 +37,13 @@ public class UserService {
     public ResponseEntity<Map<String, String>> createUsers(String acceptHeader, String contentType) {
         return userRepository.createUser(acceptHeader, contentType);
     }
+    
+    public Optional<User> updateUser(User users) {
+        return userRepository.updateUser(users);
+    }
+
+    public Optional<User> deleteUser(int id) {
+        return userRepository.deleteUser(id);
+    }
 }
 
