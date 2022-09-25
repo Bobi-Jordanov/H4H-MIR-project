@@ -55,4 +55,23 @@ public class UserRepository {
 
         return ResponseEntity.status(HttpStatus.OK).body(returnValue);
     }
+    
+    public Optional<User> updateUser(User user) {
+        User currentUser = users.get(user.getId());
+
+        if (currentUser != null) {
+            users.add(user);
+            currentUser = users.get(user.getId());
+        }
+        return Optional.ofNullable(currentUser);
+    }
+
+    public Optional<User> deleteUser(int id) {
+        User currentUser = users.get(id);
+
+        if (currentUser != null) {
+            users.remove(id);
+        }
+        return Optional.ofNullable(currentUser);
+    }
 }
