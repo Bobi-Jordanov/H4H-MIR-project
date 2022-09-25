@@ -17,6 +17,14 @@ import java.util.Map;
 public class UserController {
     @Autowired
     private UserService userService;
+    
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    class UserNotFoundException extends RuntimeException {
+
+        public UserNotFoundException() {
+            super("User does not exist");
+        }
+    }
 
     @GetMapping
     public @ResponseBody List<User> getUser() {
@@ -51,6 +59,18 @@ public class UserController {
 //
 //        return userService.createUsers(acceptHeader, contentType);
 //    }
+    
+    
+    @PutMapping
+    User updateUser(@RequestBody User users) {
+        return this.userService.updateUser(users)
+                .orElseThrow(UserNotFoundException::new);
+    }
 
+    @DeleteMapping("/{id}")
+    void deleteUser(@PathVariable int id) {
+        this.userService.deleteUser(id)
+                .orElseThrow(UserNotFoundException::new);
+    }
 
 }
